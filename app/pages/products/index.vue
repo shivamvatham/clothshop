@@ -86,10 +86,10 @@
                   :alt="product.name" 
                   image-class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                <div class="absolute inset-0 bg-transparent group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center pointer-events-none group-hover:pointer-events-auto">
                   <button 
                     @click="addToCart(product)"
-                    class="bg-white text-gray-800 px-6 py-3 rounded-full font-medium opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 hover:bg-pink-400 hover:text-white"
+                    class="bg-white text-gray-800 px-6 py-3 rounded-full font-medium opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 hover:bg-pink-400 hover:text-white pointer-events-auto"
                   >
                     Add to Cart
                   </button>
