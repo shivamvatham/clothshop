@@ -4,10 +4,10 @@
     <section class="hero-gradient min-h-[80vh] flex items-center">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div class="text-center lg:text-left">
-          <h1 class="text-5xl lg:text-6xl font-bold text-gray-800 mb-6 leading-tight">
+          <h1 class="text-3xl lg:text-4xl font-bold text-gray-800 mb-6 mt-4 leading-tight">
             Elegant
-            <span class="block text-pink-400">Fashion</span>
-            for Every Woman
+            <span class="text-pink-400">Fashion</span>
+            <span class="block">for Every Woman</span>
           </h1>
           <p class="text-xl text-gray-600 mb-8 max-w-lg">
             Discover our exquisite collection of kurtis, sarees, and contemporary wear designed for the modern Indian woman.
