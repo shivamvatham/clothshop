@@ -120,13 +120,4 @@ const featuredProducts = computed(() => {
     salePrice: product.price
   }))
 })
-
-const addToCart = (product) => {
-  const existingItem = cart.value.find(item => item.id === product.id)
-  if (existingItem) {
-    existingItem.quantity++
-  } else {
-    cart.value.push({ ...product, quantity: 1 })
-  }
-}
 </script>

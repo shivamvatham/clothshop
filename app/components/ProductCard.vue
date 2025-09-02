@@ -1,10 +1,16 @@
 <template>
-  <div class="bg-white border border-gray-200 rounded-sm overflow-hidden hover:shadow-lg transition-shadow">
-    <ProductImage 
-      :src="product.image" 
-      :alt="product.name"
-      image-class="w-full h-48 object-cover"
-    />
+  <NuxtLink :to="`/products/${product.id}`" class="block">
+    <div class="bg-white border border-gray-200 rounded-sm overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
+    <div class="relative">
+      <div v-if="salePercentage" class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-medium z-10">
+        {{ salePercentage }}% OFF
+      </div>
+      <ProductImage 
+        :src="product.image" 
+        :alt="product.name"
+        image-class="w-full h-48 object-cover"
+      />
+    </div>
     
     <div class="p-3">
       <h3 class="font-medium text-gray-900 text-sm mb-2 line-clamp-2">{{ product.name }}</h3>
@@ -26,7 +32,8 @@
         </span>
       </div>
     </div>
-  </div>
+    </div>
+  </NuxtLink>
 </template>
 
 <script setup>
@@ -34,6 +41,10 @@ const props = defineProps({
   product: {
     type: Object,
     required: true
+  },
+  salePercentage: {
+    type: Number,
+    default: null
   }
 })
 </script>
