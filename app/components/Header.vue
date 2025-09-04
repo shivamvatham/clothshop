@@ -5,7 +5,7 @@
         <!-- Logo -->
         <div class="flex-shrink-0">
           <NuxtLink to="/" class="text-2xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent hover:scale-105 transition-transform duration-200">
-            Elegance
+            Vastralaya
           </NuxtLink>
         </div>
 
@@ -31,12 +31,12 @@
 
         <!-- Cart & Actions -->
         <div class="flex items-center space-x-3">
-          <button class="relative p-2.5 text-gray-700 bg-gray-50/80 rounded-xl hover:text-indigo-600 hover:bg-indigo-50/80 hover:scale-105 transition-all duration-200 border-none cursor-pointer">
+          <NuxtLink to="/cart" class="relative p-2.5 text-gray-700 bg-gray-50/80 rounded-xl hover:text-indigo-600 hover:bg-indigo-50/80 hover:scale-105 transition-all duration-200 border-none cursor-pointer">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
             </svg>
             <span v-if="cart.length > 0" class="absolute -top-1 -right-1 bg-gradient-to-r from-pink-500 to-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold shadow-lg">{{ cart.length }}</span>
-          </button>
+          </NuxtLink>
           
           <!-- Mobile menu button -->
           <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden p-2 text-gray-700 bg-gray-50/80 rounded-xl hover:text-indigo-600 hover:bg-indigo-50/80 transition-all duration-200 border-none cursor-pointer">

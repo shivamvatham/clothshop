@@ -79,7 +79,7 @@
 
       <!-- Copyright -->
       <div class="border-t border-gray-800 mt-8 pt-8 text-center">
-        <p class="text-gray-400">© 2024 Elegance. All rights reserved.</p>
+        <p class="text-gray-400">© {{ new Date().getFullYear() }} Vastra. All rights reserved.</p>
       </div>
     </div>
   </footer>

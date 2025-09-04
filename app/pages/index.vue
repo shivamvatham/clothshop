@@ -8,11 +8,11 @@
           <div class="text-center lg:text-left space-y-8">
             <div class="space-y-6">
               <div class="inline-block px-4 py-2 bg-white/30 backdrop-blur-sm rounded-full text-sm font-medium text-gray-700 border border-white/40 shadow-sm">
-                ✨ New Collection 2024
+                ✨ New Collection {{ new Date().getFullYear() }}
               </div>
               <h1 class="text-5xl lg:text-6xl font-bold leading-tight">
                 <span class="block text-gray-900">Redefine Your</span>
-                <span class="block bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">Elegance</span>
+                <span class="block bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">Vastra</span>
               </h1>
               <p class="text-xl text-gray-600 max-w-xl leading-relaxed">
                 Discover premium fashion that blends traditional craftsmanship with contemporary design for the modern woman.
@@ -50,7 +50,7 @@
           <div class="relative max-w-lg mx-auto">
             <div class="relative">
               <img 
-                src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=600&h=800&fit=crop&auto=format&q=80" 
+                src="https://cdn.pixabay.com/photo/2024/07/02/07/58/dress-8866994_1280.jpg" 
                 alt="Elegant Fashion Collection" 
                 class="w-full h-[600px] object-cover rounded-3xl shadow-2xl"
               >
@@ -98,7 +98,7 @@
             <div class="flex items-center space-x-4">
               <div class="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
                 <img 
-                  src="https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=100&h=100&fit=crop&auto=format&q=80" 
+                  src="https://cdn.pixabay.com/photo/2024/07/02/07/58/dress-8866994_1280.jpg" 
                   alt="Kurtis" 
                   class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                 >
