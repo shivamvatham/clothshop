@@ -1,9 +1,7 @@
 <template>
-  <div class="min-h-screen bg-white">
-    <Header />
+  <NuxtLayout>
     <NuxtPage />
-    <Footer />
-  </div>
+  </NuxtLayout>
 </template>
 
 <script setup>
