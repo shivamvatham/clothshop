@@ -1,0 +1,29 @@
+@import "tailwindcss";
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap'); */
+
+:root {
+  --peach: #FFE5D9;
+  --lavender: #E8D5FF;
+  --beige: #F5F1EB;
+  --soft-peach: #FFF0E6;
+  --text-dark: #2D2D2D;
+  --text-gray: #6B7280;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-dark);
+}
+
+.hero-gradient {
+  background: linear-gradient(135deg, var(--peach) 0%, var(--lavender) 100%);
+}
+
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
