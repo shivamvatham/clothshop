@@ -7,11 +7,15 @@ export const api = {
     const url = `${API_BASE_URL}${endpoint}`
     
     const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-      },
+      headers: {},
       ...options
+    }
+    if (!(options.body instanceof FormData)) {
+      config.headers['Content-Type'] = 'application/json'
+    }
+    
+    if (options.headers) {
+      config.headers = { ...config.headers, ...options.headers }
     }
 
     try {

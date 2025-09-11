@@ -192,6 +192,7 @@
 </template>
 
 <script setup>
+import { apiRequest } from '~/utils/request.js'
 const products = inject('products')
 const cart = inject('cart')
 
@@ -203,4 +204,21 @@ const featuredProducts = computed(() => {
     salePrice: product.price
   }))
 })
+
+
+// const getProductData = async () =>{
+//   try{
+//     const response = await apiRequest('/products/collection/featured')
+//     console.log(response)
+//   }catch (e){
+//     console.log('error',e)
+//   }
+// }
+// const { data: featuredProducts, pending, error } = await useLazyFetch('/products/collection/featured', {
+//   baseURL: 'http://localhost:3001/api',
+//   key: 'featured-products'
+// })
+// onMounted(() => {
+//   getProductData()
+// })
 </script>

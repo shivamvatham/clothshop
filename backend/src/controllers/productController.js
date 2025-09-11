@@ -2,6 +2,9 @@ const Product = require('../models/Product');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const { auth, adminAuth } = require('../middleware/auth');
+const { validateProduct } = require('../middleware/productMiddleware');
+const errorHandler = require('../middleware/errorHandler');
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({
@@ -25,7 +28,7 @@ const upload = multer({
     const allowedTypes = /jpeg|jpg|png|gif|webp/;
     const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
     const mimetype = allowedTypes.test(file.mimetype);
-    
+
     if (mimetype && extname) {
       return cb(null, true);
     } else {
@@ -38,13 +41,13 @@ const upload = multer({
 const createProduct = async (req, res) => {
   try {
     const { name, salePrice, actualPrice, higherPrice, collection, sizes, description } = req.body;
-    
+
     // Handle uploaded images
     const images = req.files ? req.files.map(file => `/uploads/products/${file.filename}`) : [];
-    
+
     // Parse sizes if it's a string
     const parsedSizes = typeof sizes === 'string' ? JSON.parse(sizes) : sizes;
-    
+
     const product = new Product({
       name,
       salePrice: Number(salePrice),
@@ -55,9 +58,9 @@ const createProduct = async (req, res) => {
       sizes: parsedSizes || [],
       description
     });
-    
+
     await product.save();
-    
+
     res.status(201).json({
       success: true,
       message: 'Product created successfully',
@@ -76,7 +79,7 @@ const createProduct = async (req, res) => {
 const getProducts = async (req, res) => {
   try {
     const products = await Product.find().sort({ createdAt: -1 });
-    
+
     res.json({
       success: true,
       data: products,
@@ -95,14 +98,14 @@ const getProducts = async (req, res) => {
 const getProduct = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
-    
+
     if (!product) {
       return res.status(404).json({
         success: false,
         message: 'Product not found'
       });
     }
-    
+
     res.json({
       success: true,
       data: product
@@ -121,8 +124,8 @@ const getProductsByCollection = async (req, res) => {
   try {
     const { collection } = req.params;
     const products = await Product.find({ collection }).sort({ createdAt: -1 });
-    
-    res.json({
+
+    res.status(200).json({
       success: true,
       data: products,
       total: products.length,
@@ -138,9 +141,10 @@ const getProductsByCollection = async (req, res) => {
 };
 
 module.exports = {
-  createProduct,
-  getProducts,
-  getProduct,
-  getProductsByCollection,
-  upload
+  createProduct: [auth, adminAuth, upload.array('images', 5), validateProduct, createProduct],
+  getProducts: [auth, getProducts],
+  getProduct: [auth, getProduct],
+  getProductsByCollection: [auth, getProductsByCollection],
+  upload, // Just multer config - no auth needed
+  errorHandler
 };

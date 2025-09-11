@@ -8,9 +8,9 @@ const router = express.Router();
 router.get('/hello', helloController.getHello);
 
 // Product routes
-router.post('/products', productController.upload.array('images', 5), productController.createProduct);
-router.get('/products', productController.getProducts);
-router.get('/products/collection/:collection', productController.getProductsByCollection);
-router.get('/products/:id', productController.getProduct);
+router.post('/products', ...productController.createProduct);
+router.get('/products', ...productController.getProducts);
+router.get('/products/collection/:collection', ...productController.getProductsByCollection);
+router.get('/products/:id', ...productController.getProduct);
 
 module.exports = router;
