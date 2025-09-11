@@ -7,32 +7,62 @@
     <div class="bg-white rounded-lg shadow">
       <div class="p-6">
         <form @submit.prevent="handleSubmit" class="space-y-6">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Product Name</label>
-            <input v-model="form.name" type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Enter product name">
+          <FormInput
+            v-model="form.name"
+            label="Product Name"
+            type="text"
+            required
+            placeholder="Enter product name"
+          />
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <FormInput
+              v-model="form.salePrice"
+              label="Sale Price"
+              type="number"
+              required
+              placeholder="Sale price"
+            />
+            <FormInput
+              v-model="form.actualPrice"
+              label="Actual Price"
+              type="number"
+              required
+              placeholder="Actual price"
+            />
+            <FormInput
+              v-model="form.higherPrice"
+              label="Higher Price"
+              type="number"
+              placeholder="Higher price"
+            />
           </div>
           
-          <div class="grid grid-cols-2 gap-6">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Price</label>
-              <input v-model="form.price" type="number" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="0">
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
-              <select v-model="form.category" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                <option value="">Select Category</option>
-                <option value="kurtis">Kurtis</option>
-                <option value="sarees">Sarees</option>
-                <option value="dresses">Dresses</option>
-                <option value="lehengas">Lehengas</option>
-              </select>
-            </div>
-          </div>
+          <FormSelect
+            v-model="form.collection"
+            label="Collection"
+            required
+            placeholder="Select Collection"
+            :options="collectionOptions"
+          />
           
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
-            <textarea v-model="form.description" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Product description"></textarea>
-          </div>
+          <ImageUploader
+            v-model="form.images"
+            label="Product Images"
+          />
+          
+          <SizeSelector
+            v-model="form.sizes"
+            label="Available Sizes"
+          />
+          
+          <FormInput
+            v-model="form.description"
+            label="Description"
+            type="textarea"
+            placeholder="Product description"
+            :rows="4"
+          />
           
           <div class="flex justify-end space-x-4">
             <NuxtLink to="/admin/products" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
@@ -57,12 +87,24 @@ import { productAPI } from '~/utils/request.js'
 
 const form = ref({
   name: '',
-  price: '',
-  category: '',
+  salePrice: '',
+  actualPrice: '',
+  higherPrice: '',
+  collection: '',
+  images: [],
+  sizes: [],
   description: ''
 })
 
 const loading = ref(false)
+
+const collectionOptions = [
+  { value: 'featured', label: 'Featured Product' },
+  { value: 'sale', label: 'Sale' },
+  { value: 'collection', label: 'Our Collection' },
+  { value: 'new-arrival', label: 'New Arrival' },
+  { value: 'all', label: 'All' }
+]
 
 const handleSubmit = async () => {
   loading.value = true
@@ -74,8 +116,12 @@ const handleSubmit = async () => {
     // Reset form
     form.value = {
       name: '',
-      price: '',
-      category: '',
+      salePrice: '',
+      actualPrice: '',
+      higherPrice: '',
+      collection: '',
+      images: [],
+      sizes: [],
       description: ''
     }
     

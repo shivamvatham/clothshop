@@ -31,6 +31,13 @@
 
         <!-- Cart & Actions -->
         <div class="flex items-center space-x-3">
+          <NuxtLink to="/admin" class="hidden md:flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-gray-50/80 rounded-xl hover:text-indigo-600 hover:bg-indigo-50/80 hover:scale-105 transition-all duration-200">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+            </svg>
+            Admin
+          </NuxtLink>
+          
           <NuxtLink to="/cart" class="relative p-2.5 text-gray-700 bg-gray-50/80 rounded-xl hover:text-indigo-600 hover:bg-indigo-50/80 hover:scale-105 transition-all duration-200 border-none cursor-pointer">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
@@ -76,6 +83,9 @@
             </NuxtLink>
             <NuxtLink to="/contact" class="block px-4 py-3 text-base font-medium text-gray-700 rounded-lg transition-all duration-200 hover:text-indigo-600 hover:bg-indigo-50/80 router-link-active:text-indigo-600 router-link-active:bg-indigo-50/80 no-underline" @click="mobileMenuOpen = false">
               Contact
+            </NuxtLink>
+            <NuxtLink to="/admin" class="block px-4 py-3 text-base font-medium text-gray-700 rounded-lg transition-all duration-200 hover:text-indigo-600 hover:bg-indigo-50/80 router-link-active:text-indigo-600 router-link-active:bg-indigo-50/80 no-underline" @click="mobileMenuOpen = false">
+              Admin Login
             </NuxtLink>
           </div>
         </div>

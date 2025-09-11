@@ -5,12 +5,29 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  price: {
+  salePrice: {
     type: Number,
     required: true
   },
+  actualPrice: {
+    type: Number,
+    required: true
+  },
+  higherPrice: {
+    type: Number
+  },
+  collection: {
+    type: String,
+    required: true,
+    enum: ['featured', 'sale', 'collection', 'new-arrival', 'all']
+  },
+  images: [{
+    type: String
+  }],
+  sizes: [{
+    type: String
+  }],
   description: String,
-  category: String,
   inStock: {
     type: Boolean,
     default: true
