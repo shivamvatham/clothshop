@@ -192,33 +192,33 @@
 </template>
 
 <script setup>
-import { apiRequest } from '~/utils/request.js'
-const products = inject('products')
-const cart = inject('cart')
+// const cart = inject('cart')
+const { request } = useRequest()
+
+// const products = inject('products')
+
+// const featuredProducts = computed(() => {
+//   return products.slice(0, 10).map(product => ({
+//     ...product,
+//     sizes: ['XS', 'S', 'M', 'L', 'XL'],
+//     originalPrice: (product.price * 1.3).toFixed(2),
+//     salePrice: product.price
+//   }))
+// })
+const { data: products, error } = await request('/products/collection/feature')
+const config = useRuntimeConfig()
 
 const featuredProducts = computed(() => {
-  return products.slice(0, 10).map(product => ({
-    ...product,
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
-    originalPrice: (product.price * 1.3).toFixed(2),
-    salePrice: product.price
+  if (!products?.data || !Array.isArray(products.data)) return []
+  return products.data.map(product => ({
+    id: product._id,
+    name: product.name,
+    price: product.salePrice,
+    originalPrice: product.higherPrice,
+    salePrice: product.actualPrice,
+    image: product.images?.[0] ? `${config.public.apiBaseUrl.replace('/api', '')}${product.images[0]}` : '',
+    sizes: product.sizes || [],
+    inStock: product.inStock
   }))
 })
-
-
-// const getProductData = async () =>{
-//   try{
-//     const response = await apiRequest('/products/collection/featured')
-//     console.log(response)
-//   }catch (e){
-//     console.log('error',e)
-//   }
-// }
-// const { data: featuredProducts, pending, error } = await useLazyFetch('/products/collection/featured', {
-//   baseURL: 'http://localhost:3001/api',
-//   key: 'featured-products'
-// })
-// onMounted(() => {
-//   getProductData()
-// })
 </script>
