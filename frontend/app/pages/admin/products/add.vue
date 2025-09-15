@@ -47,7 +47,7 @@ definePageMeta({
   layout: 'admin'
 })
 
-import { apiRequest } from '~/utils/request.js'
+const { request } = useRequest()
 
 const form = ref({
   name: null,
@@ -94,7 +94,7 @@ const handleSubmit = async () => {
       })
     }
 
-    const response = await apiRequest('/products', 'POST', formData)
+    const response = await request('/products', 'POST', formData)
 
     console.log('Product created:', response)
 

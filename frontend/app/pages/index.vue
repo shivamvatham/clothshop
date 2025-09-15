@@ -205,7 +205,7 @@ const { request } = useRequest()
 //     salePrice: product.price
 //   }))
 // })
-const { data: products, error } = await request('/products/collection/feature')
+const { data: products, error } = await request('/products')
 const config = useRuntimeConfig()
 
 const featuredProducts = computed(() => {
@@ -216,9 +216,10 @@ const featuredProducts = computed(() => {
     price: product.salePrice,
     originalPrice: product.higherPrice,
     salePrice: product.actualPrice,
-    image: product.images?.[0] ? `${config.public.apiBaseUrl.replace('/api', '')}${product.images[0]}` : '',
+    image: product.images?.[0] ? `http://localhost:3001${product.images[0]}` : '',
     sizes: product.sizes || [],
     inStock: product.inStock
   }))
 })
+console.log(featuredProducts.value)
 </script>

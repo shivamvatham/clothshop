@@ -1,12 +1,12 @@
 export const useRequest = () => {
   const config = useRuntimeConfig()
   
-  const request = async (endpoint, options = {}) => {
-    const { method = 'GET', body, headers = {}, ...fetchOptions } = options
+  const request = async (endpoint, method = 'GET', body = null, headers = {}) => {
+    const defaultHeaders = { ...headers }
     
-    const defaultHeaders = {
-      'Content-Type': 'application/json',
-      ...headers
+    // Only set Content-Type for non-FormData requests
+    if (!(body instanceof FormData)) {
+      defaultHeaders['Content-Type'] = 'application/json'
     }
     
     if (config.public.apiToken) {
@@ -18,8 +18,7 @@ export const useRequest = () => {
         baseURL: config.public.apiBaseUrl,
         method,
         headers: defaultHeaders,
-        body: body ? JSON.stringify(body) : undefined,
-        ...fetchOptions
+        body: body instanceof FormData ? body : (body ? JSON.stringify(body) : undefined)
       })
       
       return { data: response, error: null }
