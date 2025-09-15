@@ -4,27 +4,30 @@
       <div class="flex justify-between items-center h-16">
         <!-- Logo -->
         <div class="flex-shrink-0">
-          <NuxtLink to="/" class="text-2xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent hover:scale-105 transition-transform duration-200">
-            Vastralaya
+          <NuxtLink to="/" class="flex items-center">
+            <img src="/shreeFashion.png" alt="Shree Fashion" class="h-15 w-auto">
+            <span class="p-1 text-2xl font-bold bg-gradient-to-r from-orange-700 to-red-800  bg-clip-text text-transparent">
+              श्री Fashion
+            </span>
           </NuxtLink>
         </div>
 
         <!-- Navigation -->
         <nav class="hidden md:flex items-center space-x-1">
-          <NuxtLink to="/" class="relative px-4 py-2 text-sm font-medium text-gray-700 rounded-lg transition-all duration-200 hover:text-indigo-600 hover:bg-gray-50/80 router-link-active:text-indigo-600 router-link-active:bg-indigo-50/80">
+          <NuxtLink to="/" class="relative px-4 py-2 text-sm font-medium bg-gradient-to-r from-orange-700 to-red-800 bg-clip-text text-transparent rounded-lg transition-all duration-200 hover:from-orange-800 hover:to-red-900 router-link-active:from-orange-800 router-link-active:to-red-900">
             Home
           </NuxtLink>
-          <NuxtLink to="/products" class="relative px-4 py-2 text-sm font-medium text-gray-700 rounded-lg transition-all duration-200 hover:text-indigo-600 hover:bg-gray-50/80 router-link-active:text-indigo-600 router-link-active:bg-indigo-50/80">
+          <NuxtLink to="/products" class="relative px-4 py-2 text-sm font-medium bg-gradient-to-r from-orange-700 to-red-800 bg-clip-text text-transparent rounded-lg transition-all duration-200 hover:from-orange-800 hover:to-red-900 router-link-active:from-orange-800 router-link-active:to-red-900">
             Shop
           </NuxtLink>
-          <NuxtLink to="/new-arrivals" class="relative px-4 py-2 text-sm font-medium text-gray-700 rounded-lg transition-all duration-200 hover:text-indigo-600 hover:bg-gray-50/80 router-link-active:text-indigo-600 router-link-active:bg-indigo-50/80">
+          <NuxtLink to="/new-arrivals" class="relative px-4 py-2 text-sm font-medium bg-gradient-to-r from-orange-700 to-red-800 bg-clip-text text-transparent rounded-lg transition-all duration-200 hover:from-orange-800 hover:to-red-900 router-link-active:from-orange-800 router-link-active:to-red-900">
             New Arrivals
           </NuxtLink>
-          <NuxtLink to="/sale" class="relative px-4 py-2 text-sm font-medium text-gray-700 rounded-lg transition-all duration-200 hover:text-indigo-600 hover:bg-gray-50/80 router-link-active:text-indigo-600 router-link-active:bg-indigo-50/80">
+          <NuxtLink to="/sale" class="relative px-4 py-2 text-sm font-medium bg-gradient-to-r from-orange-700 to-red-800 bg-clip-text text-transparent rounded-lg transition-all duration-200 hover:from-orange-800 hover:to-red-900 router-link-active:from-orange-800 router-link-active:to-red-900">
             Sale
             <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full text-[10px] font-bold">HOT</span>
           </NuxtLink>
-          <NuxtLink to="/contact" class="relative px-4 py-2 text-sm font-medium text-gray-700 rounded-lg transition-all duration-200 hover:text-indigo-600 hover:bg-gray-50/80 router-link-active:text-indigo-600 router-link-active:bg-indigo-50/80">
+          <NuxtLink to="/contact" class="relative px-4 py-2 text-sm font-medium bg-gradient-to-r from-orange-700 to-red-800 bg-clip-text text-transparent rounded-lg transition-all duration-200 hover:from-orange-800 hover:to-red-900 router-link-active:from-orange-800 router-link-active:to-red-900">
             Contact
           </NuxtLink>
         </nav>
