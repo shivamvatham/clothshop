@@ -194,25 +194,16 @@
 </template>
 
 <script setup>
-// const cart = inject('cart')
 const { request } = useRequest()
 
-// const products = inject('products')
-
-// const featuredProducts = computed(() => {
-//   return products.slice(0, 10).map(product => ({
-//     ...product,
-//     sizes: ['XS', 'S', 'M', 'L', 'XL'],
-//     originalPrice: (product.price * 1.3).toFixed(2),
-//     salePrice: product.price
-//   }))
-// })
-const { data: products, error } = await request('/products')
+const { data: products, error } = await useAsyncData('products', () => 
+  request('/products')
+)
 const config = useRuntimeConfig()
 
 const featuredProducts = computed(() => {
-  if (!products?.data || !Array.isArray(products.data)) return []
-  return products.data.map(product => ({
+  if (!products?.value?.data || !Array.isArray(products?.value?.data)) return []
+  return products.value.data.map(product => ({
     id: product._id,
     name: product.name,
     price: product.salePrice,

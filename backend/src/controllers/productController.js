@@ -140,11 +140,38 @@ const getProductsByCollection = async (req, res) => {
   }
 };
 
+// delete product
+const deleteProduct = async (req, res) => {
+  console.log('deleteProduct',req,res);
+  try {
+    const product = await Product.findByIdAndDelete(req.params.id);
+
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: 'Product not found'
+      });
+    }
+
+    res.json({
+      success: true,
+      message: 'Product deleted successfully'
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error deleting product',
+      error: error.message
+    });
+  }
+};
+
 module.exports = {
   createProduct: [auth, adminAuth, upload.array('images', 5), validateProduct, createProduct],
   getProducts: [auth, getProducts],
   getProduct: [auth, getProduct],
   getProductsByCollection: [auth, getProductsByCollection],
+  deleteProduct: [auth, adminAuth, deleteProduct],
   upload, // Just multer config - no auth needed
   errorHandler
 };

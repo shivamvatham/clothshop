@@ -21,7 +21,7 @@ export const useRequest = () => {
         body: body instanceof FormData ? body : (body ? JSON.stringify(body) : undefined)
       })
       
-      return { data: response, error: null }
+      return response
     } catch (error) {
       console.error('API Request failed:', error)
       return { 
