@@ -2,7 +2,7 @@ const Product = require('../models/Product');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const { auth, adminAuth } = require('../middleware/auth');
+const { adminAuth } = require('../middleware/auth');
 const { validateProduct } = require('../middleware/productMiddleware');
 const errorHandler = require('../middleware/errorHandler');
 
@@ -40,7 +40,7 @@ const upload = multer({
 // Create product
 const createProduct = async (req, res) => {
   try {
-    const { name, salePrice, actualPrice, higherPrice, collection, sizes, description } = req.body;
+    const { name, salePrice, actualPrice, higherPrice, category, sizes, description } = req.body;
 
     // Handle uploaded images
     const images = req.files ? req.files.map(file => `/uploads/products/${file.filename}`) : [];
@@ -53,7 +53,7 @@ const createProduct = async (req, res) => {
       salePrice: Number(salePrice),
       actualPrice: Number(actualPrice),
       higherPrice: higherPrice ? Number(higherPrice) : undefined,
-      collection,
+      category,
       images,
       sizes: parsedSizes || [],
       description
@@ -122,14 +122,14 @@ const getProduct = async (req, res) => {
 // Get products by collection
 const getProductsByCollection = async (req, res) => {
   try {
-    const { collection } = req.params;
-    const products = await Product.find({ collection }).sort({ createdAt: -1 });
+    const { category } = req.params;
+    const products = await Product.find({ category }).sort({ createdAt: -1 });
 
     res.status(200).json({
       success: true,
       data: products,
       total: products.length,
-      collection
+      category
     });
   } catch (error) {
     res.status(500).json({
@@ -167,11 +167,11 @@ const deleteProduct = async (req, res) => {
 };
 
 module.exports = {
-  createProduct: [auth, adminAuth, upload.array('images', 5), validateProduct, createProduct],
-  getProducts: [auth, getProducts],
-  getProduct: [auth, getProduct],
-  getProductsByCollection: [auth, getProductsByCollection],
-  deleteProduct: [auth, adminAuth, deleteProduct],
+  createProduct,
+  getProducts,
+  getProduct,
+  getProductsByCollection,
+  deleteProduct,
   upload, // Just multer config - no auth needed
   errorHandler
 };

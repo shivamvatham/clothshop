@@ -18,7 +18,8 @@
 
 <script setup>
 definePageMeta({
-  layout: 'admin'
+  layout: 'admin',
+  middleware: 'admin'
 })
 
 const orderColumns = [

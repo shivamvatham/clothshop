@@ -1,6 +1,7 @@
 <script setup>
 definePageMeta({
-  layout: false
+  layout: false,
+  middleware: 'admin'
 })
 
 await navigateTo('/admin/login')

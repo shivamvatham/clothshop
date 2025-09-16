@@ -68,7 +68,8 @@
 import { ShoppingBag, DollarSign, Package, Users } from 'lucide-vue-next'
 
 definePageMeta({
-  layout: 'admin'
+  layout: 'admin',
+  middleware: 'admin'
 })
 
 const orderColumns = [

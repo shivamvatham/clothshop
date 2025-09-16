@@ -16,7 +16,7 @@ const productSchema = new mongoose.Schema({
   higherPrice: {
     type: Number
   },
-  collection: {
+  category: {
     type: String,
     required: true,
     enum: ['featured', 'sale', 'collection', 'new-arrival', 'all']

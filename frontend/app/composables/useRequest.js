@@ -9,8 +9,23 @@ export const useRequest = () => {
       defaultHeaders['Content-Type'] = 'application/json'
     }
     
-    if (config.public.apiToken) {
-      defaultHeaders.Authorization = `Bearer ${config.public.apiToken}`
+    // Get appropriate token based on route context
+    let token = null
+    
+    if (process.client) {
+      const route = useRoute()
+      
+      if (route.path.startsWith('/admin')) {
+        // Use admin token for admin routes
+        token = useState('admin.token').value || localStorage.getItem('admin_token')
+      } else {
+        // Use user token for regular routes
+        token = useState('auth.token').value || localStorage.getItem('auth_token')
+      }
+    }
+    
+    if (token) {
+      defaultHeaders.Authorization = `Bearer ${token}`
     }
     
     try {

@@ -1,39 +1,70 @@
 <template>
-  <div>
-    <div class="mb-6">
-      <h1 class="text-2xl font-bold text-gray-900">Add Product</h1>
+  <div class="mx-auto">
+    <div class="mb-4">
+      <h1 class="text-xl font-bold text-gray-900">Add New Product</h1>
     </div>
 
-    <div class="bg-white rounded-lg shadow">
-      <div class="p-6">
-        <form @submit.prevent="handleSubmit" class="space-y-6">
-          <FormInput v-model="form.name" label="Product Name" type="text" required placeholder="Enter product name" />
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <FormInput v-model="form.salePrice" label="Sale Price" type="number" required placeholder="Sale price" />
-            <FormInput v-model="form.actualPrice" label="Actual Price" type="number" required
-              placeholder="Actual price" />
-            <FormInput v-model="form.higherPrice" label="Higher Price" type="number" placeholder="Higher price" />
+    <div class="bg-white rounded-lg shadow-sm border">
+      <div class="p-4">
+        <ErrorAlert :message="error" />
+        
+        <div v-if="success" class="bg-green-50 border border-green-200 rounded-lg p-3 mb-4">
+          <div class="flex items-center">
+            <svg class="w-4 h-4 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <p class="text-green-800 text-sm">{{ success }}</p>
+          </div>
+        </div>
+        
+        <form @submit.prevent="handleSubmit" class="space-y-4">
+          <!-- Basic Info -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div class="lg:col-span-2">
+              <FormInput v-model="form.name" label="Product Name" type="text" required placeholder="Enter product name" />
+            </div>
+            
+            <FormInput v-model="form.salePrice" label="Sale Price (₹)" type="number" required placeholder="599" />
+            <FormInput v-model="form.actualPrice" label="Actual Price (₹)" type="number" required placeholder="799" />
+            
+            <FormInput v-model="form.higherPrice" label="Higher Price (₹)" type="number" placeholder="999 (optional)" />
+            <FormSelect v-model="form.category" label="Category" required placeholder="Select Category" :options="categoryOptions" />
           </div>
 
-          <FormSelect v-model="form.collection" label="Collection" required placeholder="Select Collection"
-            :options="collectionOptions" />
+          <!-- Images & Sizes -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div>
+              <ImageUploader v-model="form.images" label="Product Images" />
+            </div>
+            <div>
+              <SizeSelector v-model="form.sizes" label="Available Sizes" />
+            </div>
+          </div>
 
-          <ImageUploader v-model="form.images" label="Product Images" />
+          <!-- Description & Stock -->
+          <div class="space-y-4">
+            <FormInput v-model="form.description" label="Description" type="textarea" placeholder="Product description (optional)" :rows="3" />
+            
+            <div class="flex items-center space-x-3">
+              <input 
+                v-model="form.inStock" 
+                type="checkbox" 
+                id="inStock" 
+                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+              />
+              <label for="inStock" class="text-sm font-medium text-gray-700">
+                Product is in stock
+              </label>
+            </div>
+          </div>
 
-          <SizeSelector v-model="form.sizes" label="Available Sizes" />
-
-          <FormInput v-model="form.description" label="Description" type="textarea" placeholder="Product description"
-            :rows="4" />
-
-          <div class="flex justify-end space-x-4">
-            <NuxtLink to="/admin/products"
-              class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+          <!-- Actions -->
+          <div class="flex justify-end space-x-3 pt-4 border-t">
+            <NuxtLink to="/admin/products" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 text-sm">
               Cancel
             </NuxtLink>
-            <button type="submit" :disabled="loading"
-              class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50">
-              {{ loading ? 'Adding...' : 'Add Product' }}
+            <button type="submit" :disabled="loading || !isFormValid" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm">
+              {{ loading ? 'Creating...' : 'Create Product' }}
             </button>
           </div>
         </form>
@@ -44,34 +75,89 @@
 
 <script setup>
 definePageMeta({
-  layout: 'admin'
+  layout: 'admin',
+  middleware: 'admin'
 })
 
 const { request } = useRequest()
 
 const form = ref({
-  name: null,
-  salePrice: null,
-  actualPrice: null,
-  higherPrice: null,
-  collection: null,
+  name: '',
+  salePrice: '',
+  actualPrice: '',
+  higherPrice: '',
+  category: '',
   images: [],
   sizes: [],
-  description: null,
+  description: '',
+  inStock: true
 })
 
 const loading = ref(false)
+const error = ref('')
+const success = ref('')
 
-const collectionOptions = [
-  { value: 'featured', label: 'Featured Product' },
+const categoryOptions = [
+  { value: 'featured', label: 'Featured' },
   { value: 'sale', label: 'Sale' },
-  { value: 'collection', label: 'Our Collection' },
+  { value: 'collection', label: 'Collection' },
   { value: 'new-arrival', label: 'New Arrival' },
   { value: 'all', label: 'All' }
 ]
 
+// Form validation
+const isFormValid = computed(() => {
+  return (
+    form.value.name.trim() !== '' &&
+    Number(form.value.salePrice) > 0 &&
+    Number(form.value.actualPrice) > 0 &&
+    form.value.category !== '' &&
+    Number(form.value.salePrice) <= Number(form.value.actualPrice) // Sale price should be <= actual price
+  )
+})
+
+// Validate form before submit
+const validateForm = () => {
+  const errors = []
+  
+  if (!form.value.name.trim()) {
+    errors.push('Product name is required')
+  }
+  
+  if (!form.value.salePrice || Number(form.value.salePrice) <= 0) {
+    errors.push('Sale price must be greater than 0')
+  }
+  
+  if (!form.value.actualPrice || Number(form.value.actualPrice) <= 0) {
+    errors.push('Actual price must be greater than 0')
+  }
+  
+  if (Number(form.value.salePrice) > Number(form.value.actualPrice)) {
+    errors.push('Sale price cannot be greater than actual price')
+  }
+  
+  if (form.value.higherPrice && Number(form.value.higherPrice) <= Number(form.value.actualPrice)) {
+    errors.push('Higher price should be greater than actual price')
+  }
+  
+  if (!form.value.category) {
+    errors.push('Category is required')
+  }
+  
+  return errors
+}
+
 const handleSubmit = async () => {
+  // Validate form
+  const validationErrors = validateForm()
+  if (validationErrors.length > 0) {
+    error.value = validationErrors[0] // Show first error
+    return
+  }
+  
   loading.value = true
+  error.value = ''
+  success.value = ''
 
   try {
     // Always use FormData (multipart)
@@ -80,7 +166,8 @@ const handleSubmit = async () => {
     formData.append('salePrice', form.value.salePrice)
     formData.append('actualPrice', form.value.actualPrice)
     if (form.value.higherPrice) formData.append('higherPrice', form.value.higherPrice)
-    formData.append('collection', form.value.collection)
+    formData.append('category', form.value.category)
+    formData.append('inStock', form.value.inStock)
     formData.append('description', form.value.description || '')
     formData.append('sizes', JSON.stringify(form.value.sizes))
 
@@ -94,9 +181,14 @@ const handleSubmit = async () => {
       })
     }
 
-    const response = await request('/products', 'POST', formData)
+    const response = await request('/admin/products', 'POST', formData)
 
-    console.log('Product created:', response)
+    if (response.success) {
+      success.value = 'Product created successfully!'
+    } else {
+      error.value = response.message || 'Failed to create product'
+      return
+    }
 
     // Reset form
     form.value = {
@@ -104,16 +196,17 @@ const handleSubmit = async () => {
       salePrice: '',
       actualPrice: '',
       higherPrice: '',
-      collection: '',
+      category: '',
       images: [],
       sizes: [],
-      description: ''
+      description: '',
+      inStock: true
     }
 
     // Navigate to products list
     navigateTo('/admin/products')
-  } catch (error) {
-    console.error('Error creating product:', error)
+  } catch (err) {
+    error.value = 'Failed to create product. Please try again.'
   } finally {
     loading.value = false
   }

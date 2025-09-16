@@ -69,6 +69,8 @@
 <script setup>
 import { LayoutDashboard, Package, ChevronDown, Plus, List, ShoppingBag, Menu, LogOut } from 'lucide-vue-next'
 
+const { logout: adminLogout } = useAdminAuth()
+
 const showProducts = ref(false)
 const sidebarOpen = ref(false)
 
@@ -77,7 +79,7 @@ const toggleProducts = () => {
 }
 
 const logout = () => {
-  navigateTo('/admin/login')
+  adminLogout()
 }
 
 // Ensure client-side hydration
