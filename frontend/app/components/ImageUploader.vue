@@ -37,12 +37,35 @@
 <script setup>
 const props = defineProps({
   modelValue: Array,
-  label: String
+  label: String,
+  existingImages: {
+    type: Array,
+    default: () => []
+  }
 })
 
 const emit = defineEmits(['update:modelValue'])
 
 const selectedImages = ref([])
+const config = useRuntimeConfig()
+
+// Helper function to get full image URL
+const getImageUrl = (imagePath) => {
+  if (!imagePath) return ''
+  if (imagePath.startsWith('http')) return imagePath
+  return `${config.public.apiBaseUrl.replace('/api', '')}${imagePath}`
+}
+
+// Initialize with existing images
+if (props.existingImages && props.existingImages.length > 0) {
+  selectedImages.value = props.existingImages.map((imagePath, index) => ({
+    url: getImageUrl(imagePath),
+    name: `Existing image ${index + 1}`,
+    isExisting: true,
+    originalPath: imagePath
+  }))
+  emit('update:modelValue', selectedImages.value)
+}
 
 const handleFileSelect = (event) => {
   const files = Array.from(event.target.files)
@@ -52,7 +75,8 @@ const handleFileSelect = (event) => {
       selectedImages.value.push({
         file,
         url: e.target.result,
-        name: file.name
+        name: file.name,
+        isExisting: false
       })
       emit('update:modelValue', selectedImages.value)
     }

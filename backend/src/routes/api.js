@@ -1,5 +1,4 @@
 const express = require('express');
-const helloController = require('../controllers/helloController');
 const productController = require('../controllers/productController');
 const authController = require('../controllers/authController');
 const adminAuthController = require('../controllers/adminAuthController');
@@ -18,9 +17,6 @@ const { validateProduct } = require('../middleware/productMiddleware');
 const { handleValidationErrors } = require('../middleware/validationHandler');
 
 const router = express.Router();
-
-// Hello World route
-router.get('/hello', helloController.getHello);
 
 // User Authentication routes
 router.post('/auth/register', validateUserRegistration, handleValidationErrors, authController.register);
@@ -61,6 +57,7 @@ router.get('/products/:id', productController.getProduct);
 
 // Admin Product Management routes
 router.post('/admin/products', adminAuth, productController.upload.array('images', 5), validateProduct, handleValidationErrors, productController.createProduct);
+router.put('/admin/products/:id', adminAuth, productController.upload.array('images', 5), validateProduct, handleValidationErrors, productController.updateProduct);
 router.delete('/admin/products/:id', adminAuth, productController.deleteProduct);
 
 module.exports = router;

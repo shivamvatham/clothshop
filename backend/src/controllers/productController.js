@@ -140,9 +140,71 @@ const getProductsByCollection = async (req, res) => {
   }
 };
 
+// Update product
+const updateProduct = async (req, res) => {
+  try {
+    const { name, salePrice, actualPrice, higherPrice, category, sizes, description, inStock, existingImages } = req.body;
+
+    // Find existing product
+    const existingProduct = await Product.findById(req.params.id);
+    if (!existingProduct) {
+      return res.status(404).json({
+        success: false,
+        message: 'Product not found'
+      });
+    }
+
+    // Handle images
+    let images = [];
+    
+    // Add existing images that weren't removed
+    if (existingImages) {
+      const parsedExistingImages = typeof existingImages === 'string' ? JSON.parse(existingImages) : existingImages;
+      images = [...parsedExistingImages];
+    }
+    
+    // Add new uploaded images
+    if (req.files && req.files.length > 0) {
+      const newImages = req.files.map(file => `/uploads/products/${file.filename}`);
+      images = [...images, ...newImages];
+    }
+
+    // Parse sizes if it's a string
+    const parsedSizes = typeof sizes === 'string' ? JSON.parse(sizes) : sizes;
+
+    // Update product
+    const updatedProduct = await Product.findByIdAndUpdate(
+      req.params.id,
+      {
+        name,
+        salePrice: Number(salePrice),
+        actualPrice: Number(actualPrice),
+        higherPrice: higherPrice ? Number(higherPrice) : undefined,
+        category,
+        images,
+        sizes: parsedSizes || [],
+        description,
+        inStock: inStock === 'true' || inStock === true
+      },
+      { new: true, runValidators: true }
+    );
+
+    res.json({
+      success: true,
+      message: 'Product updated successfully',
+      data: updatedProduct
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: 'Error updating product',
+      error: error.message
+    });
+  }
+};
+
 // delete product
 const deleteProduct = async (req, res) => {
-  console.log('deleteProduct',req,res);
   try {
     const product = await Product.findByIdAndDelete(req.params.id);
 
@@ -168,6 +230,7 @@ const deleteProduct = async (req, res) => {
 
 module.exports = {
   createProduct,
+  updateProduct,
   getProducts,
   getProduct,
   getProductsByCollection,
