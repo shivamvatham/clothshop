@@ -2,8 +2,6 @@ const Product = require('../models/Product');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const { adminAuth } = require('../middleware/auth');
-const { validateProduct } = require('../middleware/productMiddleware');
 const errorHandler = require('../middleware/errorHandler');
 
 // Configure multer for file uploads

@@ -15,6 +15,7 @@ const { validateBuyNow } = require('../middleware/buyNowMiddleware');
 const { validateOrder } = require('../middleware/orderMiddleware');
 const { validateProduct } = require('../middleware/productMiddleware');
 const { handleValidationErrors } = require('../middleware/validationHandler');
+const { addCurrencyToResponse } = require('../middleware/responseMiddleware');
 
 const router = express.Router();
 
@@ -51,9 +52,9 @@ router.put('/orders/:orderId/cancel', auth, orderController.cancelOrder);
 router.post('/buy-now', auth, validateBuyNow, handleValidationErrors, buyNowController.buyNow);
 
 // Public Product routes (for users to browse)
-router.get('/products', productController.getProducts);
-router.get('/products/category/:category', productController.getProductsByCollection);
-router.get('/products/:id', productController.getProduct);
+router.get('/products', addCurrencyToResponse, productController.getProducts);
+router.get('/products/category/:category', addCurrencyToResponse, productController.getProductsByCollection);
+router.get('/products/:id', addCurrencyToResponse, productController.getProduct);
 
 // Admin Product Management routes
 router.post('/admin/products', adminAuth, productController.upload.array('images', 5), validateProduct, handleValidationErrors, productController.createProduct);

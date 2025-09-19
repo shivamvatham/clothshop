@@ -24,9 +24,7 @@
             <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <NuxtLink to="/products" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-orange-600 to-red-600 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                 <span>Explore Collection</span>
-                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                </svg>
+                <ArrowRight class="w-5 h-5 ml-2" />
               </NuxtLink>
               <NuxtLink to="/new-arrivals" class="inline-flex items-center px-8 py-4 bg-white/80 backdrop-blur-sm text-gray-700 border-2 border-gray-200 rounded-xl font-semibold hover:border-orange-500 hover:text-orange-600 hover:-translate-y-1 transition-all duration-300 shadow-sm">
                 <span>New Arrivals</span>
@@ -61,9 +59,7 @@
             <div class="absolute -bottom-6 -left-6 lg:block hidden bg-white/90 backdrop-blur-sm p-6 rounded-2xl shadow-xl border border-white/20">
               <div class="flex items-center gap-4">
                 <div class="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center">
-                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                  </svg>
+                  <Check class="w-6 h-6 text-white" />
                 </div>
                 <div>
                   <div class="font-semibold text-gray-900">Premium Quality</div>
@@ -88,9 +84,7 @@
           </div>
           <NuxtLink to="/products" class="hidden md:inline-flex items-center text-orange-600 hover:text-orange-700 font-medium text-sm">
             View All
-            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-            </svg>
+            <ArrowRight class="w-4 h-4 ml-1" />
           </NuxtLink>
         </div>
         
@@ -110,9 +104,7 @@
                 <p class="text-sm text-gray-600 mb-2">Timeless designs for every occasion</p>
                 <div class="flex items-center justify-between">
                   <span class="text-xs text-orange-600 font-medium">150+ Items</span>
-                  <svg class="w-4 h-4 text-orange-500 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                  </svg>
+                  <ArrowRight class="w-4 h-4 text-orange-500 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
             </div>
@@ -133,9 +125,7 @@
                 <p class="text-sm text-gray-600 mb-2">Traditional elegance meets modern style</p>
                 <div class="flex items-center justify-between">
                   <span class="text-xs text-red-600 font-medium">200+ Items</span>
-                  <svg class="w-4 h-4 text-red-500 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                  </svg>
+                  <ArrowRight class="w-4 h-4 text-red-500 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
             </div>
@@ -156,9 +146,7 @@
                 <p class="text-sm text-gray-600 mb-2">Contemporary designs for confident women</p>
                 <div class="flex items-center justify-between">
                   <span class="text-xs text-teal-600 font-medium">120+ Items</span>
-                  <svg class="w-4 h-4 text-teal-500 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                  </svg>
+                  <ArrowRight class="w-4 h-4 text-teal-500 group-hover:translate-x-1 transition-transform" />
                 </div>
               </div>
             </div>
@@ -194,11 +182,20 @@
 </template>
 
 <script setup>
+import { ArrowRight, Check } from 'lucide-vue-next'
+
 const { request } = useRequest()
 
 const { data: products, error } = await useAsyncData('products', () => 
   request('/products')
 )
+console.log(products.value.currency)
+if (products.value?.currency && process.client) {
+  localStorage.setItem('currency', products.value.currency)
+}
+if (process.client) {
+  console.log('Currency from localStorage:', localStorage.getItem('currency'))
+}
 const config = useRuntimeConfig()
 
 const featuredProducts = computed(() => {
