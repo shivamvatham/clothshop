@@ -1,7 +1,7 @@
 <template>
   <div class="relative overflow-hidden bg-gray-100">
     <img 
-      v-show="!showError && imageLoaded"
+      v-show="!showError"
       :src="src" 
       :alt="alt"
       :class="imageClass"
@@ -9,7 +9,7 @@
       @load="handleImageLoad"
     />
     <div 
-      v-show="showError"
+      v-show="showError && !imageLoaded"
       :class="imageClass"
       class="flex items-center justify-center bg-gradient-to-br from-pink-50 to-purple-50"
     >
@@ -38,7 +38,7 @@ const props = defineProps({
   }
 })
 
-const showError = ref(true)
+const showError = ref(false)
 const imageLoaded = ref(false)
 
 const handleImageLoad = () => {

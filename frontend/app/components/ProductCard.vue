@@ -33,12 +33,11 @@
             +{{ product.sizes.length - 4 }}
           </span>
         </div>
-        
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
-            <span class="text-lg font-bold text-gray-900">{{ product.salePrice }}</span>
-            <span v-if="product.originalPrice > product.salePrice" class="text-sm text-gray-400 line-through">
-              {{ currency }} {{ product.originalPrice }}
+            <span class="text-lg font-bold text-gray-900"> <span class="font-bold mr-[-2px]" v-html="product.currency"></span> {{ product.salePrice }}</span>
+            <span v-if="product.originalPrice > product.salePrice" class="text-sm text-red-400 line-through">
+              <span class="font-bold mr-[-2px]" v-html="product.currency"></span> {{ product.originalPrice }}
             </span>
           </div>
           <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -54,7 +53,6 @@
 
 <script setup>
 import { Heart, Plus } from 'lucide-vue-next'
-const currency = ref(null);
 
 const props = defineProps({
   product: {
@@ -64,9 +62,6 @@ const props = defineProps({
   salePercentage: {
     type: Number,
     default: null
-  }
+  },
 })
-if(process.client){
-currency.value = localStorage.getItem('currency')
-}
 </script>
