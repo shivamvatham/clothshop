@@ -24,14 +24,14 @@
               placeholder="Enter product name" />
             <form-element-input v-model="form.salePrice" :rules="[required, numeric]" label="Sale Price" type="number"
               placeholder="Enter Sale Price" />
-            <form-element-input v-model="form.actualPrice" :rules="[required, numeric]" label="Actual Price" type="number"
-              placeholder="Enter Actual Price" />
+            <form-element-input v-model="form.actualPrice" :rules="[required, numeric]" label="Actual Price"
+              type="number" placeholder="Enter Actual Price" />
 
             <form-element-input v-model="form.higherPrice" label="Higher Price" type="number"
               placeholder="Enter Higher Price" />
             <form-element-select v-model="form.category" label="Category" placeholder="Select Category"
               :options="categoryOptions" />
-              <form-element-size-selector v-model="form.sizes" label="Available Sizes" />
+            <form-element-size-selector v-model="form.sizes" label="Available Sizes" />
           </div>
 
           <!-- Images & Sizes -->
@@ -40,13 +40,13 @@
               <ImageUploader v-model="form.images" label="Product Images" />
             </div>
             <div>
+              <form-element-text-area v-model="form.description" label="Description" type="textarea"
+                placeholder="Product description (optional)" rows="6" />
             </div>
           </div>
 
           <!-- Description & Stock -->
           <div class="space-y-4">
-            <FormInput v-model="form.description" label="Description" type="textarea"
-              placeholder="Product description (optional)" :rows="3" />
 
             <div class="flex items-center space-x-3">
               <input v-model="form.inStock" type="checkbox" id="inStock"
@@ -63,7 +63,7 @@
               class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 text-sm">
               Cancel
             </NuxtLink>
-            <button type="submit" :disabled="loading || !isFormValid"
+            <button type="submit" :disabled="loading"
               class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm">
               {{ loading ? 'Creating...' : 'Create Product' }}
             </button>
@@ -81,6 +81,7 @@ definePageMeta({
 })
 
 const { request } = useRequest()
+import { required, numeric } from '~/utils/validation'
 
 const form = ref({
   name: '',
@@ -106,53 +107,47 @@ const categoryOptions = [
   { value: 'all', label: 'All' }
 ]
 
-// Form validation
-const isFormValid = computed(() => {
-  return (
-    form.value.name.trim() !== '' &&
-    Number(form.value.salePrice) > 0 &&
-    Number(form.value.actualPrice) > 0 &&
-    form.value.category !== '' &&
-    Number(form.value.salePrice) <= Number(form.value.actualPrice) // Sale price should be <= actual price
-  )
-})
-
-// Validate form before submit
 const validateForm = () => {
   const errors = []
-
-  if (!form.value.name.trim()) {
-    errors.push('Product name is required')
+  
+  // Validate required fields
+  const nameValidation = required(form.value.name)
+  if (nameValidation !== true) errors.push(nameValidation)
+  
+  const salePriceValidation = required(form.value.salePrice)
+  if (salePriceValidation !== true) errors.push(salePriceValidation)
+  
+  const actualPriceValidation = required(form.value.actualPrice)
+  if (actualPriceValidation !== true) errors.push(actualPriceValidation)
+  
+  const categoryValidation = required(form.value.category)
+  if (categoryValidation !== true) errors.push(categoryValidation)
+  
+  // Validate numeric fields
+  if (form.value.salePrice) {
+    const salePriceNumeric = numeric(form.value.salePrice)
+    if (salePriceNumeric !== true) errors.push(salePriceNumeric)
   }
-
-  if (!form.value.salePrice || Number(form.value.salePrice) <= 0) {
-    errors.push('Sale price must be greater than 0')
+  
+  if (form.value.actualPrice) {
+    const actualPriceNumeric = numeric(form.value.actualPrice)
+    if (actualPriceNumeric !== true) errors.push(actualPriceNumeric)
   }
-
-  if (!form.value.actualPrice || Number(form.value.actualPrice) <= 0) {
-    errors.push('Actual price must be greater than 0')
+  
+  // Validate price logic
+  if (form.value.salePrice && form.value.actualPrice) {
+    if (Number(form.value.salePrice) > Number(form.value.actualPrice)) {
+      errors.push('Sale price cannot be higher than actual price')
+    }
   }
-
-  if (Number(form.value.salePrice) > Number(form.value.actualPrice)) {
-    errors.push('Sale price cannot be greater than actual price')
-  }
-
-  if (form.value.higherPrice && Number(form.value.higherPrice) <= Number(form.value.actualPrice)) {
-    errors.push('Higher price should be greater than actual price')
-  }
-
-  if (!form.value.category) {
-    errors.push('Category is required')
-  }
-
-  return errors
+  
+  return errors.length === 0
 }
 
 const handleSubmit = async () => {
-  // Validate form
-  const validationErrors = validateForm()
-  if (validationErrors.length > 0) {
-    error.value = validationErrors[0] // Show first error
+  // Validate form before submission
+  if (!validateForm()) {
+    error.value = 'Please fix the validation errors before submitting'
     return
   }
 
@@ -189,19 +184,6 @@ const handleSubmit = async () => {
     } else {
       error.value = response.message || 'Failed to create product'
       return
-    }
-
-    // Reset form
-    form.value = {
-      name: '',
-      salePrice: '',
-      actualPrice: '',
-      higherPrice: '',
-      category: '',
-      images: [],
-      sizes: [],
-      description: '',
-      inStock: true
     }
 
     // Navigate to products list

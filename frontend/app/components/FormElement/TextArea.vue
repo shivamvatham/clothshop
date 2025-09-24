@@ -7,11 +7,11 @@
         </label>
   
         <!-- Input -->
-        <input v-model="value" id="inpfield"
-          class="w-full textFieldbg h-8 rounded-sm inputText text-black p-1 border-gray-100 focus:outline-none" 
+        <textarea v-model="value" id="inpfield"
+          class="w-full textFieldbg rounded-sm inputText text-black p-1 border-gray-100 focus:outline-none" 
           :class="error ? 'border-red-500 border focus:border-red-500 focus:ring-red-500 focus:ring-1'
             : 'border focus:ring-1 border-gray-500 focus:border-gray-500 focus:ring-gray-500'" :placeholder="placeholder"
-          :type="type" @blur="validate" />
+          :type="type" @blur="validate" :rows="rows" />
   
         <!-- Error -->
         <span class="block text-red-500 text-[11px] transition-all duration-300 overflow-hidden min-h-[14px]"
@@ -32,6 +32,7 @@
     type: { type: String, default: 'text' },
     label: String,
     placeholder: String,
+    rows: { type: String, default: '3' }
   })
   
   const emit = defineEmits(["update:modelValue"])

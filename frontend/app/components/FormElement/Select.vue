@@ -2,7 +2,7 @@
   <div>
     <div class="rounded-md text-left -mb-3">
       <!-- Label -->
-      <label v-if="label" for="selectfield" class="block text-[12px] text-gray-700">
+      <label v-if="label" for="selectfield" class="block labelFont text-gray-700">
         {{ label }}
       </label>
 
@@ -13,7 +13,7 @@
         @blur="validate"
         id="selectfield"
         :required="required"
-        class="w-full bg-[#f7f0f0] h-8 rounded-sm text-[12px] text-black p-1 border-gray-100 focus:outline-none"
+        class="w-full textFieldbg h-8 rounded-sm inputText text-black p-1 border-gray-100 focus:outline-none"
         :class="error ? 'border-red-500 border focus:border-red-500 focus:ring-red-500 focus:ring-1' : 'border focus:ring-1 border-gray-500 focus:border-gray-500 focus:ring-gray-500'"
       >
         <option v-if="placeholder" value="">{{ placeholder }}</option>

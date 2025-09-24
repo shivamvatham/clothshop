@@ -28,3 +28,15 @@ body {
   transform: translateY(-8px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
+
+.textFieldbg{
+  background-color: var(--text-field-bg);
+}
+
+.labelFont{
+  font-size: 14px;
+}
+
+.inputText{
+  font-size: 13px;
+}

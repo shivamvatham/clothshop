@@ -2,14 +2,14 @@
   <div>
     <div class="rounded-md text-left -mb-3">
       <!-- Label -->
-      <label v-if="label" for="sizefield" class="block text-[12px] text-gray-700">
+      <label v-if="label" for="sizefield" class="block labelFont text-gray-700">
         {{ label }}
       </label>
 
       <!-- Size Buttons Container -->
       <div class="flex flex-wrap gap-1">
         <button v-for="size in availableSizes" :key="size" type="button" @click="toggleSize(size)"
-          class="bg-[#f7f0f0] h-8 rounded-sm text-[12px] text-black px-2 py-1 border border-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-500 hover:bg-gray-100 transition-colors"
+          class="textFieldbg h-8 rounded-sm inputText text-black px-2 py-1 border border-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-500 hover:bg-gray-100 transition-colors"
           :class="selectedSizes.includes(size) ? 'border-blue-500 bg-blue-50 text-blue-600' : ''">
           {{ size }}
         </button>
