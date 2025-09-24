@@ -1,6 +1,6 @@
 <template>
     <div>
-      <div class="rounded-md text-left">
+      <div class="rounded-md text-left -mb-3">
         <!-- Label -->
         <label for="inpfield" class="block text-[12px]">
           {{ label }}
@@ -8,9 +8,9 @@
   
         <!-- Input -->
         <input v-model="value" id="inpfield"
-          class="w-full bg-white h-8 rounded-sm text-[12px] text-black p-1 border-0 focus:outline-none" :class="error
-            ? 'border-red-500 border focus:border-red-500 focus:ring-red-500 focus:ring-1'
-            : 'border focus:ring-1 border-gray-300 focus:border-gray-500 focus:ring-gray-500'" :placeholder="placeholder"
+          class="w-full bg-[#f7f0f0] h-8 rounded-sm text-[12px] text-black p-1 border-gray-100 focus:outline-none" 
+          :class="error ? 'border-red-500 border focus:border-red-500 focus:ring-red-500 focus:ring-1'
+            : 'border focus:ring-1 border-gray-500 focus:border-gray-500 focus:ring-gray-500'" :placeholder="placeholder"
           :type="type" @blur="validate" />
   
         <!-- Error -->
