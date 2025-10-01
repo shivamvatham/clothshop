@@ -94,6 +94,9 @@ const loginAdmin = async (req, res) => {
     // Generate token
     const token = generateAdminToken(admin._id);
 
+    // login timeout
+    const timeout = 3600;
+
     // Return admin data (without password)
     const adminData = {
       id: admin._id,
@@ -106,6 +109,7 @@ const loginAdmin = async (req, res) => {
       success: true,
       message: 'Admin login successful',
       token,
+      timeout,
       admin: adminData
     });
 
@@ -122,7 +126,7 @@ const loginAdmin = async (req, res) => {
 const getAdminProfile = async (req, res) => {
   try {
     const admin = await Admin.findById(req.admin.adminId).select('-password');
-    
+
     if (!admin) {
       return res.status(404).json({
         success: false,

@@ -18,43 +18,51 @@
         </div>
 
         <form @submit.prevent="handleSubmit" class="space-y-4">
-          <!-- Basic Info -->
           <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            <form-element-input v-model="form.name" label="Product Name" type="text" :rules="[required]"
-              placeholder="Enter product name" />
-            <form-element-input v-model="form.salePrice" :rules="[required, numeric]" label="Sale Price" type="number"
-              placeholder="Enter Sale Price" />
-            <form-element-input v-model="form.actualPrice" :rules="[required, numeric]" label="Actual Price"
-              type="number" placeholder="Enter Actual Price" />
-
-            <form-element-input v-model="form.higherPrice" label="Higher Price" type="number"
-              placeholder="Enter Higher Price" />
-            <form-element-select v-model="form.category" label="Category" placeholder="Select Category"
-              :options="categoryOptions" />
-            <form-element-size-selector v-model="form.sizes" label="Available Sizes" />
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Product Name *</label>
+              <input v-model="form.name" type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Enter product name" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Sale Price *</label>
+              <input v-model="form.salePrice" type="number" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Enter Sale Price" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Actual Price *</label>
+              <input v-model="form.actualPrice" type="number" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Enter Actual Price" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Higher Price</label>
+              <input v-model="form.higherPrice" type="number" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Enter Higher Price" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Category *</label>
+              <select v-model="form.category" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                <option value="">Select Category</option>
+                <option value="featured">Featured</option>
+                <option value="sale">Sale</option>
+                <option value="collection">Collection</option>
+                <option value="new-arrival">New Arrival</option>
+                <option value="all">All</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Available Sizes</label>
+              <form-element-size-selector v-model="form.sizes" />
+            </div>
           </div>
 
-          <!-- Images & Sizes -->
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <ImageUploader v-model="form.images" label="Product Images" />
             <div>
-              <ImageUploader v-model="form.images" label="Product Images" />
-            </div>
-            <div>
-              <form-element-text-area v-model="form.description" label="Description" type="textarea"
-                placeholder="Product description (optional)" rows="6" />
+              <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+              <textarea v-model="form.description" rows="6" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Product description (optional)"></textarea>
             </div>
           </div>
 
-          <!-- Description & Stock -->
-          <div class="space-y-4">
-
-            <div class="flex items-center space-x-3">
-              <input v-model="form.inStock" type="checkbox" id="inStock"
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2" />
-              <label for="inStock" class="text-sm font-medium text-gray-700">
-                Product is in stock
-              </label>
-            </div>
+          <div class="flex items-center space-x-3">
+            <input v-model="form.inStock" type="checkbox" id="inStock" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2" />
+            <label for="inStock" class="text-sm font-medium text-gray-700">Product is in stock</label>
           </div>
 
           <!-- Actions -->
@@ -81,7 +89,6 @@ definePageMeta({
 })
 
 const { request } = useRequest()
-import { required, numeric } from '~/utils/validation'
 
 const form = ref({
   name: '',
@@ -99,55 +106,11 @@ const loading = ref(false)
 const error = ref('')
 const success = ref('')
 
-const categoryOptions = [
-  { value: 'featured', label: 'Featured' },
-  { value: 'sale', label: 'Sale' },
-  { value: 'collection', label: 'Collection' },
-  { value: 'new-arrival', label: 'New Arrival' },
-  { value: 'all', label: 'All' }
-]
 
-const validateForm = () => {
-  const errors = []
-  
-  // Validate required fields
-  const nameValidation = required(form.value.name)
-  if (nameValidation !== true) errors.push(nameValidation)
-  
-  const salePriceValidation = required(form.value.salePrice)
-  if (salePriceValidation !== true) errors.push(salePriceValidation)
-  
-  const actualPriceValidation = required(form.value.actualPrice)
-  if (actualPriceValidation !== true) errors.push(actualPriceValidation)
-  
-  const categoryValidation = required(form.value.category)
-  if (categoryValidation !== true) errors.push(categoryValidation)
-  
-  // Validate numeric fields
-  if (form.value.salePrice) {
-    const salePriceNumeric = numeric(form.value.salePrice)
-    if (salePriceNumeric !== true) errors.push(salePriceNumeric)
-  }
-  
-  if (form.value.actualPrice) {
-    const actualPriceNumeric = numeric(form.value.actualPrice)
-    if (actualPriceNumeric !== true) errors.push(actualPriceNumeric)
-  }
-  
-  // Validate price logic
-  if (form.value.salePrice && form.value.actualPrice) {
-    if (Number(form.value.salePrice) > Number(form.value.actualPrice)) {
-      errors.push('Sale price cannot be higher than actual price')
-    }
-  }
-  
-  return errors.length === 0
-}
 
 const handleSubmit = async () => {
-  // Validate form before submission
-  if (!validateForm()) {
-    error.value = 'Please fix the validation errors before submitting'
+  if (Number(form.value.salePrice) > Number(form.value.actualPrice)) {
+    error.value = 'Sale price cannot be higher than actual price'
     return
   }
 

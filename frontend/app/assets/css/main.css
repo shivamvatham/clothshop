@@ -16,6 +16,18 @@ body {
   color: var(--text-dark);
 }
 
+input:user-invalid {
+  border: 2px solid red; /* Red border after user interaction if invalid */
+}
+
+select:user-invalid {
+  border: 2px solid red; /* Red border after user interaction if invalid */
+}
+
+textarea:user-invalid {
+  border: 2px solid red; /* Red border after user interaction if invalid */
+}
+
 .hero-gradient {
   background: linear-gradient(135deg, var(--peach) 0%, var(--lavender) 100%);
 }

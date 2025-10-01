@@ -15,7 +15,7 @@
     <div v-else class="bg-white rounded-lg shadow-sm border">
       <div class="p-4">
         <ErrorAlert :message="error" />
-        
+
         <div v-if="success" class="bg-green-50 border border-green-200 rounded-lg p-3 mb-4">
           <div class="flex items-center">
             <svg class="w-4 h-4 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -24,58 +24,75 @@
             <p class="text-green-800 text-sm">{{ success }}</p>
           </div>
         </div>
-        
+
         <form @submit.prevent="handleSubmit" class="space-y-4">
-          <!-- Basic Info -->
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div class="lg:col-span-2">
-              <FormInput v-model="form.name" label="Product Name" type="text" required placeholder="Enter product name" />
-            </div>
-            
-            <FormInput v-model="form.salePrice" label="Sale Price (₹)" type="number" required placeholder="599" />
-            <FormInput v-model="form.actualPrice" label="Actual Price (₹)" type="number" required placeholder="799" />
-            
-            <FormInput v-model="form.higherPrice" label="Higher Price (₹)" type="number" placeholder="999 (optional)" />
-            <FormSelect v-model="form.category" label="Category" required placeholder="Select Category" :options="categoryOptions" />
-          </div>
-
-          <!-- Images & Sizes -->
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div>
-              <ImageUploader 
-                v-model="form.images" 
-                :existing-images="existingImages" 
-                label="Product Images" 
-              />
+              <label class="block text-sm font-medium text-gray-700 mb-1">Product Name *</label>
+              <input v-model="form.name" type="text" required
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Enter product name" />
             </div>
             <div>
-              <SizeSelector v-model="form.sizes" label="Available Sizes" />
+              <label class="block text-sm font-medium text-gray-700 mb-1">Sale Price *</label>
+              <input v-model="form.salePrice" type="number" required
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Enter Sale Price" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Actual Price *</label>
+              <input v-model="form.actualPrice" type="number" required
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Enter Actual Price" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Higher Price</label>
+              <input v-model="form.higherPrice" type="number"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Enter Higher Price" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Category *</label>
+              <select v-model="form.category" required
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                <option value="">Select Category</option>
+                <option value="featured">Featured</option>
+                <option value="sale">Sale</option>
+                <option value="collection">Collection</option>
+                <option value="new-arrival">New Arrival</option>
+                <option value="all">All</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Available Sizes</label>
+              <form-element-size-selector v-model="form.sizes" />
             </div>
           </div>
 
-          <!-- Description & Stock -->
-          <div class="space-y-4">
-            <FormInput v-model="form.description" label="Description" type="textarea" placeholder="Product description (optional)" :rows="3" />
-            
-            <div class="flex items-center space-x-3">
-              <input 
-                v-model="form.inStock" 
-                type="checkbox" 
-                id="inStock" 
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
-              />
-              <label for="inStock" class="text-sm font-medium text-gray-700">
-                Product is in stock
-              </label>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <ImageUploader v-model="form.images" :existing-images="existingImages" label="Product Images" />
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+              <textarea v-model="form.description" rows="6"
+                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Product description (optional)"></textarea>
             </div>
+          </div>
+
+          <div class="flex items-center space-x-3">
+            <input v-model="form.inStock" type="checkbox" id="inStock"
+              class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2" />
+            <label for="inStock" class="text-sm font-medium text-gray-700">Product is in stock</label>
           </div>
 
           <!-- Actions -->
           <div class="flex justify-end space-x-3 pt-4 border-t">
-            <NuxtLink to="/admin/products" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 text-sm">
+            <NuxtLink to="/admin/products"
+              class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 text-sm">
               Cancel
             </NuxtLink>
-            <button type="submit" :disabled="loading || !isFormValid" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm">
+            <button type="submit" :disabled="loading"
+              class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-sm">
               {{ loading ? 'Updating...' : 'Update Product' }}
             </button>
           </div>
@@ -95,7 +112,7 @@ const route = useRoute()
 const { request } = useRequest()
 
 // Fetch product data
-const { data: productData, pending, error: fetchError } = await useAsyncData(`product-${route.params.id}`, () => 
+const { data: productData, pending, error: fetchError } = await useAsyncData(`product-${route.params.id}`, () =>
   request(`/products/${route.params.id}`)
 )
 
@@ -116,13 +133,7 @@ const error = ref('')
 const success = ref('')
 const existingImages = ref([])
 
-const categoryOptions = [
-  { value: 'featured', label: 'Featured' },
-  { value: 'sale', label: 'Sale' },
-  { value: 'collection', label: 'Collection' },
-  { value: 'new-arrival', label: 'New Arrival' },
-  { value: 'all', label: 'All' }
-]
+
 
 // Initialize form when product data is available
 if (productData.value?.success && productData.value?.data) {
@@ -138,63 +149,17 @@ if (productData.value?.success && productData.value?.data) {
     description: product.description || '',
     inStock: product.inStock ?? true
   }
-  
+
   // Store existing images separately
   existingImages.value = product.images || []
 }
 
-
-
-// Form validation
-const isFormValid = computed(() => {
-  return (
-    form.value.name.trim() !== '' &&
-    Number(form.value.salePrice) > 0 &&
-    Number(form.value.actualPrice) > 0 &&
-    form.value.category !== '' &&
-    Number(form.value.salePrice) <= Number(form.value.actualPrice)
-  )
-})
-
-// Validate form before submit
-const validateForm = () => {
-  const errors = []
-  
-  if (!form.value.name.trim()) {
-    errors.push('Product name is required')
-  }
-  
-  if (!form.value.salePrice || Number(form.value.salePrice) <= 0) {
-    errors.push('Sale price must be greater than 0')
-  }
-  
-  if (!form.value.actualPrice || Number(form.value.actualPrice) <= 0) {
-    errors.push('Actual price must be greater than 0')
-  }
-  
-  if (Number(form.value.salePrice) > Number(form.value.actualPrice)) {
-    errors.push('Sale price cannot be greater than actual price')
-  }
-  
-  if (form.value.higherPrice && Number(form.value.higherPrice) <= Number(form.value.actualPrice)) {
-    errors.push('Higher price should be greater than actual price')
-  }
-  
-  if (!form.value.category) {
-    errors.push('Category is required')
-  }
-  
-  return errors
-}
-
 const handleSubmit = async () => {
-  // Validate form
-  const validationErrors = validateForm()
-  if (validationErrors.length > 0) {
-    error.value = validationErrors[0]
+  if (Number(form.value.salePrice) > Number(form.value.actualPrice)) {
+    error.value = 'Sale price cannot be higher than actual price'
     return
   }
-  
+
   loading.value = true
   error.value = ''
   success.value = ''
@@ -210,11 +175,11 @@ const handleSubmit = async () => {
     formData.append('inStock', form.value.inStock)
     formData.append('description', form.value.description || '')
     formData.append('sizes', JSON.stringify(form.value.sizes))
-    
+
     // Handle images from ImageUploader component
     const existingImagePaths = []
     const newImageFiles = []
-    
+
     if (form.value.images && form.value.images.length > 0) {
       form.value.images.forEach(image => {
         if (image.isExisting && image.originalPath) {
@@ -226,10 +191,10 @@ const handleSubmit = async () => {
         }
       })
     }
-    
+
     // Send existing images that weren't removed
     formData.append('existingImages', JSON.stringify(existingImagePaths))
-    
+
     // Add new image files
     newImageFiles.forEach(file => {
       formData.append('images', file)
@@ -239,9 +204,7 @@ const handleSubmit = async () => {
 
     if (response.success) {
       success.value = 'Product updated successfully!'
-      setTimeout(() => {
         navigateTo('/admin/products')
-      }, 1500)
     } else {
       error.value = response.message || 'Failed to update product'
     }
