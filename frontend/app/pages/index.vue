@@ -1,9 +1,9 @@
 <template>
   <div>
     <!-- Hero Section -->
-    <section class="relative h-screen overflow-hidden pt-20">
+    <section class="relative h-[90vh] overflow-hidden pt-20">
       <!-- Image Slider -->
-      <div class="absolute inset-0">
+      <div class="absolute inset-0 mt-20">
         <div 
           v-for="(image, index) in heroImages" 
           :key="index"
@@ -20,13 +20,13 @@
       </div>
       
       <!-- Content Overlay -->
-      <div class="absolute inset-0 lg:bottom-20 lg:top-auto z-10 flex items-center lg:items-end justify-center">
+      <div class="absolute inset-0 lg:bottom-28 lg:top-auto z-10 flex items-center lg:items-end justify-center">
         <div class="text-center space-y-4">
-          <h2 class="text-2xl lg:text-4xl font-bold text-white drop-shadow-lg">
+          <h2 class="text-2xl lg:text-3xl text-white drop-shadow-lg">
             {{ heroImages[currentSlide].text }}
           </h2>
           <NuxtLink to="/products"
-            class="inline-flex items-center px-3 py-2 bg-white/20 backdrop-blur-sm text-white border border-white/60 rounded-sm font-semibold hover:bg-white/30 lg:hover:shadow-xl transition-all duration-300">
+            class="inline-flex items-center px-3 py-2 bg-white/20 backdrop-blur-sm text-white border border-white/60 rounded-sm hover:bg-white/30 lg:hover:shadow-xl transition-all duration-300">
             <span>Shop Now</span>
           </NuxtLink>
         </div>

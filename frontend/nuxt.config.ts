@@ -14,5 +14,15 @@ export default defineNuxtConfig({
       apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL,
       apiToken: process.env.API_TOKEN || ''
     }
+  },
+  app: {
+    head: {
+      link: [
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap'
+        }
+      ]
+    }
   }
 })

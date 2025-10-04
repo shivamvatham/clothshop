@@ -1,7 +1,7 @@
 <template>
   <!-- <div class="bg-gradient-to-r from-gray-100 to-gray-200 pb-24 w-full"> -->
-  <header class="md:fixed md:top-4 md:left-1/2 md:transform md:-translate-x-1/2 top-0 left-0 z-50 w-full md:max-w-7xl md:px-4">
-    <div class="bg-white/60 backdrop-blur-xl shadow-1xl md:rounded-2xl border-b md:border border-white/20">
+  <header class="fixed top-2 left-1/2 md:transform -translate-x-1/2 z-50 w-full max-w-7xl px-2">
+    <div class="bg-white/60 backdrop-blur-xl shadow-1xl rounded-2xl border-b md:border border-white/20">
       <div class="flex justify-between items-center h-16 px-6">
         <!-- Logo -->
         <div class="flex-shrink-0">
