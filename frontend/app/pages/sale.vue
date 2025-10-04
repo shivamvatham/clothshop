@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-gray-50">
     <!-- Header -->
     <div class="bg-gradient-to-r from-red-400 to-pink-400">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-25 text-center text-white">
         <h1 class="text-4xl font-bold mb-4">Special Sale</h1>
         <p class="text-xl mb-6">Up to 50% off on selected items</p>
         <div class="inline-block bg-white text-red-500 px-6 py-2 rounded-full font-bold text-lg">

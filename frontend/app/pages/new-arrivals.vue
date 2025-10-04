@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-gray-50">
     <!-- Header -->
     <div class="hero-gradient">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-25 text-center">
         <h1 class="text-4xl font-bold text-gray-800 mb-4">New Arrivals</h1>
         <p class="text-gray-600 max-w-2xl mx-auto">Discover the latest additions to our collection. Fresh styles, timeless elegance.</p>
       </div>
