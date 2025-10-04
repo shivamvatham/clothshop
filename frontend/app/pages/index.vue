@@ -45,14 +45,14 @@
 
     <!-- Category Cards -->
     <section class="py-10 bg-white">
-      <div class="max-w-7xl mx-auto px-2 lg:px-4">
+      <div class="max-w-7xl mx-auto px-3 lg:px-4">
         <div class="text-center mb-12">
           <h2 class="text-3xl font-medium text-black mb-4">
             Shop by Category
           </h2>
         </div>
 
-        <div class="grid grid-cols-2 lg:grid-cols-3 gap-7">
+        <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
           <CategoryCard 
             v-for="category in categories" 
             :key="category.id" 
@@ -64,7 +64,7 @@
 
     <!-- Featured Products -->
     <section class="py-4 bg-gray-50">
-      <div class="max-w-7xl mx-auto px-2 sm:px-2 lg:px-2">
+      <div class="max-w-7xl mx-auto px-4 sm:px-4 lg:px-4">
         <div class="text-center mb-12">
           <h2 class="text-3xl font-medium text-black mb-4">Featured Products</h2>
         </div>

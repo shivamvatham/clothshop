@@ -1,6 +1,6 @@
 <template>
   <NuxtLink :to="category.link" class="group relative overflow-hidden shadow-md hover:shadow-lg">
-    <div class="relative h-64">
+    <div class="relative h-34 md:h-64">
       <img 
         :src="category.image" 
         :alt="category.title" 
