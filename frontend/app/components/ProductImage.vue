@@ -7,6 +7,7 @@
       :class="imageClass"
       @error="handleImageError"
       @load="handleImageLoad"
+      class="object-cover"
     />
     <div 
       v-show="showError && !imageLoaded"

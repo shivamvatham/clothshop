@@ -6,6 +6,7 @@ const addressController = require('../controllers/addressController');
 const cartController = require('../controllers/cartController');
 const orderController = require('../controllers/orderController');
 const buyNowController = require('../controllers/buyNowController');
+const heroController = require('../controllers/heroController');
 const { auth, adminAuth } = require('../middleware/auth');
 const { validateUserRegistration, validateUserLogin } = require('../middleware/userMiddleware');
 const { validateAdminLogin } = require('../middleware/adminMiddleware');
@@ -60,5 +61,10 @@ router.get('/products/:id', addCurrencyToResponse, productController.getProduct)
 router.post('/admin/products', adminAuth, productController.upload.array('images', 5), validateProduct, handleValidationErrors, productController.createProduct);
 router.put('/admin/products/:id', adminAuth, productController.upload.array('images', 5), validateProduct, handleValidationErrors, productController.updateProduct);
 router.delete('/admin/products/:id', adminAuth, productController.deleteProduct);
+
+// Hero Management routes
+router.get('/hero', heroController.getHeros);
+router.post('/admin/hero', adminAuth, heroController.upload.single('image'), heroController.createHero);
+router.delete('/admin/hero/:id', adminAuth, heroController.deleteHero);
 
 module.exports = router;

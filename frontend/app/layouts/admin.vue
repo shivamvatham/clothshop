@@ -13,6 +13,11 @@
           <LayoutDashboard class="w-5 h-5 mr-3" />
           Dashboard
         </NuxtLink>
+
+        <NuxtLink to="/admin/hero" @click="sidebarOpen = false" class="flex items-center px-6 py-3 mx-2 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition-all duration-200" active-class="bg-blue-600 text-white">
+          <House class="w-5 h-5 mr-3" />
+          Hero Page
+        </NuxtLink>
         
         <div class="mx-2 mt-2">
           <button @click="toggleProducts" class="flex items-center justify-between w-full px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition-all duration-200">
@@ -67,7 +72,7 @@
 </template>
 
 <script setup>
-import { LayoutDashboard, Package, ChevronDown, Plus, List, ShoppingBag, Menu, LogOut } from 'lucide-vue-next'
+import { LayoutDashboard, Package, ChevronDown, Plus, List, ShoppingBag, Menu, LogOut, House } from 'lucide-vue-next'
 
 const { logout: adminLogout } = useAdminAuth()
 

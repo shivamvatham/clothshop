@@ -1,6 +1,6 @@
 <template>
   <NuxtLink :to="`/products/${product.id}`" class="group block">
-    <div class="bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:-translate-y-1">
+    <div class="bg-white shadow-sm hover:shadow-lg overflow-hidden border border-gray-100">
       <div class="relative overflow-hidden">
         <div v-if="salePercentage" class="absolute top-3 left-3 bg-gradient-to-r from-red-500 to-pink-500 text-white px-2 py-1 rounded-full text-xs font-bold z-10 shadow-lg">
           {{ salePercentage }}% OFF
@@ -13,9 +13,9 @@
         <ProductImage 
           :src="product.image" 
           :alt="product.name"
-          image-class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
+          image-class="w-full h-48 object-cover group-hover:scale-103 transition-transform duration-500"
         />
-        <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
       </div>
       
       <div class="p-4">

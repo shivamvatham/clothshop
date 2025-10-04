@@ -3,8 +3,8 @@ const Admin = require('../models/Admin');
 
 // Generate JWT Token for admin
 const generateAdminToken = (adminId) => {
-  return jwt.sign({ adminId, type: 'admin' }, process.env.JWT_SECRET || 'your-secret-key', {
-    expiresIn: '24h'
+  return jwt.sign({ adminId, type: 'admin' }, process.env.JWT_SECRET || 'shivam@devs@1110', {
+    expiresIn: '1h'
   });
 };
 
