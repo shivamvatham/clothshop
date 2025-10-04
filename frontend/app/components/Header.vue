@@ -1,11 +1,12 @@
 <template>
-  <header class="bg-white/90 backdrop-blur-md shadow-lg border-b border-gray-200/50 sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16">
+  <!-- <div class="bg-gradient-to-r from-gray-100 to-gray-200 pb-24 w-full"> -->
+  <header class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-6xl px-4">
+    <div class="bg-white/90 backdrop-blur-md shadow-xl rounded-2xl border border-gray-200/50">
+      <div class="flex justify-between items-center h-16 px-6">
         <!-- Logo -->
         <div class="flex-shrink-0">
           <NuxtLink to="/" class="flex items-center">
-            <img src="/shreeFashion.png" alt="Shree Fashion" class="h-15 w-auto">
+            <img src="/shreeFashion.png" alt="Shree Fashion" class="h-18 w-auto">
             <span class="p-1 text-2xl font-bold bg-gradient-to-r from-orange-700 to-red-800  bg-clip-text text-transparent">
               श्री Fashion
             </span>
@@ -69,8 +70,8 @@
         leave-from-class="opacity-100 translate-y-0"
         leave-to-class="opacity-0 -translate-y-2"
       >
-        <div v-if="mobileMenuOpen" class="md:hidden bg-white/95 backdrop-blur-sm border-t border-gray-200/50">
-          <div class="px-4 py-3 space-y-2">
+        <div v-if="mobileMenuOpen" class="md:hidden bg-white/95 backdrop-blur-sm border-t border-gray-200/50 rounded-b-2xl">
+          <div class="px-6 py-3 space-y-2">
             <NuxtLink to="/" class="block px-4 py-3 text-base font-medium text-gray-700 rounded-lg transition-all duration-200 hover:text-indigo-600 hover:bg-indigo-50/80 router-link-active:text-indigo-600 router-link-active:bg-indigo-50/80 no-underline" @click="mobileMenuOpen = false">
               Home
             </NuxtLink>
@@ -95,6 +96,7 @@
       </Transition>
     </div>
   </header>
+  <!-- </div> -->
 </template>
 
 <script setup>

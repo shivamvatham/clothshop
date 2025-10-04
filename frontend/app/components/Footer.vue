@@ -23,9 +23,8 @@
 
           <!-- Contact info -->
           <div class="space-y-1">
-            <p class="text-gray-300">manthanaagal067@gmail.com.com</p>
-            <p class="text-gray-400">+91 1234567890</p>
-          </div>
+            <a href="mailto:manthanaagal067@gmail.com.com"><p class="text-gray-300  hover:text-orange-600">manthanaagal067@gmail.com.com</p></a>            
+            <a href="tel:+919327395564"><p class="text-gray-400 hover:text-orange-600">+91 9327395564</p></a>          </div>
 
           <!-- Social icons -->
           <div class="flex space-x-4">
