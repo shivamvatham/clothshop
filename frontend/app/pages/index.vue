@@ -1,9 +1,9 @@
 <template>
   <div>
     <!-- Hero Section -->
-    <section class="relative h-[90vh] overflow-hidden pt-20">
+    <section class="relative h-[85vh] overflow-hidden pt-20">
       <!-- Image Slider -->
-      <div class="absolute inset-0 mt-20">
+      <div class="absolute inset-0 mt-19">
         <div 
           v-for="(image, index) in heroImages" 
           :key="index"
@@ -156,7 +156,7 @@ const categories = [
     id: 6,
     title: 'Accessories',
     description: 'Complete your ethnic look',
-    image: 'https://cdn.pixabay.com/photo/2017/08/01/11/48/woman-2564660_1280.jpg',
+    image: 'https://cdn.pixabay.com/photo/2019/11/03/20/11/portrait-4599553_1280.jpg',
     link: '/products?category=accessories'
   }
 ]
@@ -187,7 +187,7 @@ const heroImages = [
     text: 'Discover Shree Fashion'
   },
   {
-    url: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=1920&h=1080&fit=crop&auto=format&q=80',
+    url: 'https://cdn.pixabay.com/photo/2019/11/03/20/11/portrait-4599553_1280.jpg',
     alt: 'Designer Fashion Showcase',
     text: 'New Arrivals 2024'
   }
