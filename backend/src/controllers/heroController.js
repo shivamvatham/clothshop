@@ -3,9 +3,15 @@ const multer = require('multer')
 const path = require('path')
 const fs = require('fs')
 
+// Ensure upload directory exists
+const uploadDir = 'uploads/hero/'
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true })
+}
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/hero/')
+    cb(null, uploadDir)
   },
   filename: (req, file, cb) => {
     cb(null, `hero-${Date.now()}-${Math.round(Math.random() * 1E9)}${path.extname(file.originalname)}`)
@@ -49,9 +55,14 @@ const getHeros = async (req, res) => {
 const deleteHero = async (req, res) => {
   try {
     const hero = await Hero.findById(req.params.id)
-    if (hero && hero.image) {
+    if (!hero) {
+      return res.status(404).json({ success: false, message: 'Hero item not found' })
+    }
+    
+    if (hero.image && fs.existsSync(hero.image)) {
       fs.unlink(hero.image, () => {})
     }
+    
     await Hero.findByIdAndDelete(req.params.id)
     res.json({ success: true, message: 'Hero item deleted successfully!' })
   } catch (error) {
