@@ -44,15 +44,15 @@
     </section>
 
     <!-- Category Cards -->
-    <section class="py-20 bg-white">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <h2 class="text-4xl font-bold text-gray-900 mb-4">
+    <section class="py-10 bg-white">
+      <div class="max-w-7xl mx-auto px-2 lg:px-4">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-medium text-black mb-4">
             Shop by Category
           </h2>
         </div>
 
-        <div class="grid grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-2 lg:grid-cols-3 gap-7">
           <CategoryCard 
             v-for="category in categories" 
             :key="category.id" 
@@ -63,11 +63,10 @@
     </section>
 
     <!-- Featured Products -->
-    <section class="py-16 bg-gray-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section class="py-4 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-2 sm:px-2 lg:px-2">
         <div class="text-center mb-12">
-          <h2 class="text-3xl font-bold text-gray-800 mb-3">Featured Products</h2>
-          <p class="text-gray-600">Handpicked favorites from our latest collection</p>
+          <h2 class="text-3xl font-medium text-black mb-4">Featured Products</h2>
         </div>
 
         <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
@@ -128,7 +127,7 @@ const categories = [
     id: 2,
     title: 'Kurtis & Kurta Sets',
     description: 'Traditional comfort meets modern style',
-    image: 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.jpg',
+    image: 'https://cdn.pixabay.com/photo/2015/05/25/17/36/mini-cooper-783702_1280.jpg',
     link: '/products?category=kurtis'
   },
   {
@@ -149,7 +148,7 @@ const categories = [
     id: 5,
     title: 'Palazzo & Co-ords',
     description: 'Contemporary comfort wear',
-    image: 'https://cdn.pixabay.com/photo/2017/08/06/12/06/people-2592247_1280.jpg',
+    image: 'https://cdn.pixabay.com/photo/2019/11/03/20/11/portrait-4599559_1280.jpg',
     link: '/products?category=palazzo'
   },
   {
